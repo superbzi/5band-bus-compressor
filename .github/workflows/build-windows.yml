@@ -10,18 +10,24 @@ jobs:
     runs-on: windows-2022
 
     steps:
-      -code
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
 
       - name: Setup CMake and Ninja
         uses: lukka/get-cmake@latest
 
-      -CMake (JUCE / VST3)G "Visual Studio 17 2022" -A x64 -DCMAKE_BUILD_TYPE=Release
+      - name: Configure CMake (JUCE / VST3)
+        run: |
+          cmake -B build -G "Visual Studio 17 2022" -A x64 -DCMAKE_BUILD_TYPE=Release
 
       - name: Build VST3
         run: |
           cmake --build build --config Release --target SSL5BandCompressor_VST3
 
       - name: Upload VST3 Artifact
+        uses: actions/upload-artifact@v4
         with:
           name: SSL5BandCompressor-Windows-x64
           path: build/**/VST3/**
