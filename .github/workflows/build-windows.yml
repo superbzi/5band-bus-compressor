@@ -26,8 +26,8 @@ jobs:
         run: |
           cmake --build build --config Release --target SSL5BandCompressor_VST3
 
-      - name: Upload VST3 Artifact
+       - name: Upload VST3 Artifact
         uses: actions/upload-artifact@v4
         with:
           name: SSL5BandCompressor-Windows-x64
-          path: build/SSL5BandCompressor_artefacts/Release/VST3/SSL5BandCompressor.vst3
+          path: build/**/VST3/**
